@@ -41,10 +41,12 @@ module.exports = function(React, _, Square, gameStore) {
         render: function() {
             var cols = this.state.cols,
                 rows = this.state.rows,
+                sqWidth = this.state.squareWidth,
+                sqHeight = this.state.squareHeight,
                 squares = this.createSquares(cols, rows),
                 style = {
-                    width: (50 * cols) + 'px',
-                    height: (50 * rows + 50) + 'px'
+                    width: (sqWidth * cols + 5) + 'px',
+                    height: (sqHeight * rows + 50) + 'px'
                 };
     
             return (
