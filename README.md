@@ -4,7 +4,7 @@ Tutorial to learn ReactJS by creating a simple game
 
 ### install fluxtore
 
-`npm install fluxtore`
+`npm install fluxtore --save-dev`
 
 ### Creating the store
 
