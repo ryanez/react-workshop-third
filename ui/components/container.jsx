@@ -1,84 +1,50 @@
 'use strict';
 
-module.exports = function(React, _, Square) {
+module.exports = function(React, _, Square, gameStore) {
     return React.createClass({
         displayName: 'Container',
     
-        propTypes: {
-            rows: React.PropTypes.number,
-            cols: React.PropTypes.number
-        },
-    
-        getDefaultProps: function() {
-            return {
-                rows: 4,
-                cols: 4
-            };
-        },
-    
         getInitialState: function() {
-            return {
-                squares: this.initSquares(),
-                completed: false
-            };
+            return getGameState();
         },
     
-        initSquares: function() {
-            var targetSquares = this.props.rows * this.props.cols,
-                squares = _.range(1, targetSquares);
-    
-            squares.push(null);
-            return squares;
+        componentWillMount: function() {
+            gameStore.addChangeListener(this.onGameStateChange);
         },
     
-        onSquareClick: function(index, number) {
-            var options = [
-                    index - 1, //left
-                    index + 1, //right
-                    index - this.props.cols, // top
-                    index + this.props.cols //bottom
-                ],
-                targetSquares = this.props.rows * this.props.cols,
-                squares = this.state.squares,
-                moveTo = _.find(options, function(option) {
-                    return option >= 0 && option < targetSquares && squares[option] === null;
-                });
+        componentWillUnmount: function() {
+            gameStore.removeChangeListener(this.onGameStateChange);
+        },
     
-            if (!isNaN(moveTo)) {
-                squares[index] = null;
-                squares[moveTo] = number;
-                this.setState({
-                    squares: squares,
-                    completed: this.checkCompleted(squares)
-                });
+        onGameStateChange: function() {
+            this.setState(getGameState());
+        },
+    
+        createSquares: function(cols, rows) {                
+            return _.map(this.state.squares, createSquare);
+                
+            function createSquare(number, index) {
+                return number ? 
+                    (<Square
+                        number={number}
+                        key={number}
+                        index={index} 
+                        cols={cols}/>) 
+                    : null;
             }
         },
-    
+        
         randomClickHandler: function() {
-            this.setState({
-                squares: _.shuffle(this.state.squares)
-            });
-        },
-    
-        checkCompleted: function(squares) {
-            for(var i = 0; i < squares.length - 1; i += 1) {
-                if (i + 1 != squares[i]) return false;
-            }
-    
-            return true;
-        },
-    
-        createSquare: function(number, index) {
-            return number ? 
-                (<Square number={number} key={number} index={index} cols={this.props.cols} onClick={this.onSquareClick.bind(this, index, number)}/>) 
-                : null;
+            gameStore.random();
         },
     
         render: function() {
-            var squares = _.map(this.state.squares, this.createSquare),
+            var cols = this.state.cols,
+                rows = this.state.rows,
+                squares = this.createSquares(cols, rows),
                 style = {
-                    width: (50 * this.props.cols) + 'px',
-                    height: (50 * this.props.rows + 50) + 'px'
+                    width: (50 * cols) + 'px',
+                    height: (50 * rows + 50) + 'px'
                 };
     
             return (
@@ -90,4 +56,8 @@ module.exports = function(React, _, Square) {
                 );
         }
     });
+    
+    function getGameState() {
+        return gameStore.getState();
+    }
 };
