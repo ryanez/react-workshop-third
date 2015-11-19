@@ -16,7 +16,8 @@ module.exports = function(fluxtore, _) {
 		
 		actions: {
 			tryMove: tryMove,
-			random: random
+			random: random,
+			reset: reset
 		}
 	});
 	
@@ -42,6 +43,13 @@ module.exports = function(fluxtore, _) {
 		result.push(null);
 		
 		return result;
+	}
+	
+	function reset() {
+		squares = initSquares();
+		completed = false;
+		store.emitChange();
+		store.emitReset();
 	}
 	
 	function tryMove(index, number) {
