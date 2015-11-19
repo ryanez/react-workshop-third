@@ -18,7 +18,7 @@ var React = require('react'),
     ContainerFactory = require('./components/container.jsx'),
     Container = ContainerFactory(React, _, Square, gameStore),
     DashboardFactory = require('./components/dashboard.jsx'),
-    Dashboard = DashboardFactory(React, moment, gameStore);
+    Dashboard = DashboardFactory(React, moment, _, gameStore);
 
 // designed to be called once document is loaded.
 module.exports = function(containerId, dashboardId) {

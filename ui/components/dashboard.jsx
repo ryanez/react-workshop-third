@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(React, moment, gameStore) {
+module.exports = function(React, moment, _, gameStore) {
 	return React.createClass({
 		displayName: 'Dashboard',
 		
@@ -17,7 +17,9 @@ module.exports = function(React, moment, gameStore) {
 		getInitialState: function() {
 			return {
 				timer: moment({hour: 0}),
-				moves: 0
+				moves: 0,
+            	levels: gameStore.getLevels(),
+				currentLevelCode: gameStore.getCurrentLevelCode()
 			};
 		},
 	
@@ -45,7 +47,8 @@ module.exports = function(React, moment, gameStore) {
 		onGameResetListener: function() {
 			this.setState({
 				moves: 0,
-				timer: moment({hour: 0})
+				timer: moment({hour: 0}),
+				currentLevelCode: gameStore.getCurrentLevelCode()
 			});
 		},
 	
@@ -71,15 +74,25 @@ module.exports = function(React, moment, gameStore) {
 			gameStore.random();
 		},
 
+		levelChangeHandler: function(e) {
+			var code = e.currentTarget.value;
+			gameStore.selectLevel(code);
+		},
+
 		getDisplayTime: function() {
 			return this.state.timer.format('HH:mm:ss [elapsed]');
 		},
 		
 		render: function() {
+			var options = _.map(this.state.levels, function(level) {
+				return (<option value={level.code} key={level.code}>{level.displayName}</option>);
+			});
+
 			return (
 				<div>
 					<span>Moves: {this.state.moves}</span>
 					<span>Time elapsed: {this.getDisplayTime()}</span>
+					<select defaultValue={this.state.currentLevelCode} onChange={this.levelChangeHandler}>{options}</select>
 					<button onClick={this.resetClickHandler}>Reset</button>
 					<button onClick={this.randomClickHandler}>Random</button>
 				</div>)

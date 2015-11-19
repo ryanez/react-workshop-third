@@ -15,10 +15,15 @@ module.exports = function(fluxtore, _, levels) {
 		
 		getState: getState,
 		
+		getLevels: getLevels,
+		
+		getCurrentLevelCode: getCurrentLevelCode, 
+
 		actions: {
 			tryMove: tryMove,
 			random: random,
-			reset: reset
+			reset: reset,
+        	selectLevel: selectLevel
 		}
 	});
 	
@@ -35,6 +40,28 @@ module.exports = function(fluxtore, _, levels) {
 			squareWidth: squareWidth,
 			completed: completed
 		};
+	}
+
+	function getCurrentLevelCode() {
+		return currentLevel.code;
+	}
+	
+	function getLevels() {
+		return _.map(levels, function(level) {
+			return _.extend({
+				displayName: level.displayName,
+				code: level.code
+			}, level);
+		});
+	}
+	
+	function selectLevel(code) {
+		var level = _.find(levels, { code: code });
+	
+		if (level) {
+			currentLevel = level;
+			reset();
+		}
 	}
 	
 	function reset() {
