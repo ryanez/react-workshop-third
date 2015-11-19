@@ -1,7 +1,8 @@
 'use strict';
 
-module.exports = function(fluxtore, _) {
+module.exports = function(fluxtore, _, levels) {
 	var store,
+		currentLevel = levels[1],
 		squares,
 		cols = 6,
 		rows = 5,
@@ -23,7 +24,7 @@ module.exports = function(fluxtore, _) {
 	
 	function getState() {
 		if (!squares) {
-			squares = initSquares();
+			squares = currentLevel.reset(rows, cols);
 		}
 	
 		return {
@@ -35,18 +36,9 @@ module.exports = function(fluxtore, _) {
 			completed: completed
 		};
 	}
-
-	function initSquares() {
-		var targetSquares = rows * cols,
-			result = _.range(1, targetSquares);
-
-		result.push(null);
-		
-		return result;
-	}
 	
 	function reset() {
-		squares = initSquares();
+		squares = currentLevel.reset(rows, cols);
 		completed = false;
 		store.emitChange();
 		store.emitReset();
@@ -67,19 +59,11 @@ module.exports = function(fluxtore, _) {
 		if (!isNaN(moveTo)) {
 			squares[index] = null;
 			squares[moveTo] = number;
-			completed = checkCompleted();
+			completed = currentLevel.checkCompleted(squares);
 			store.emitChange();
 		} else {
 			store.emitInvalidMove(index, number);
 		}
-	}
-	
-	function checkCompleted() {
-		for(var i = 0; i < squares.length - 1; i += 1) {
-			if (i + 1 != squares[i]) return false;
-		}
-
-		return true;
 	}
 		
 	function random() {
