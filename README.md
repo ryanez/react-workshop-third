@@ -2,11 +2,11 @@
 Tutorial to learn ReactJS by creating a simple game
 
 
-## install fluxtore
+### install fluxtore
 
 `npm install fluxtore`
 
-## Creating the store
+### Creating the store
 
 Create a file `/ui/stores/gameStore.js`
 
@@ -96,7 +96,7 @@ module.exports = function(fluxtore, _) {
 };
 ```
 
-## Modify the `./ui/compnents/container.jsx` to consume the Store
+### Modify the `./ui/compnents/container.jsx` to consume the Store
 
 ```Javascript
 'use strict';
@@ -166,7 +166,7 @@ module.exports = function(React, _, Square, gameStore) {
 };
 ```
 
-## Update the `./ui/index.jsx` file
+### Update the `./ui/index.jsx` file
 
 We need to inject the `gameStore` dependency into `ContainerFactory`.
 
@@ -192,7 +192,7 @@ module.exports = function(elementId) {
 };
 ```
 
-## Reuse components
+### Reuse components
 
 Now we can try to dupicate our container
 
@@ -204,7 +204,7 @@ module.exports = function(elementId) {
 };
 ```
 
-## Update `./ui/components/square.jsx` component to use the gameStore
+### Update `./ui/components/square.jsx` component to use the gameStore
 
 ```Javascript
 'use strict';
@@ -249,7 +249,7 @@ module.exports = function(React, gameStore) {
 };
 ```
 
-## Update `/ui/index.jsx` again
+### Update `/ui/index.jsx` again
 
 We need to inject `gameStore` dependency into `SquareFactory`
 
@@ -275,7 +275,7 @@ module.exports = function(elementId) {
 };
 ```
 
-## The invalid move
+### The invalid move
 
 When a user clicks a *Square* that can't be moved, we need to alert him. Lets modify the `./ui/components/square.jsx`.
 
@@ -353,11 +353,11 @@ And we will need to add a new style for the invalid move into the `./public/styl
 }
 ```
 
-## Remove responsibilites from Container
+### Remove responsibilites from Container
 
 We have been adding a lot of functionality inside our container, lets split it a bit.
 
-## Add a `reset` method to our `./ui/stores/gameStore.js`
+### Add a `reset` method to our `./ui/stores/gameStore.js`
 
 ```Javascript
 actions: {
@@ -376,7 +376,7 @@ function reset() {
 }
 ```
 
-## Create the './ui/components/dashboard.jsx`
+### Create the './ui/components/dashboard.jsx`
 
 ```Javascript
 'use strict';
@@ -409,7 +409,7 @@ module.exports = function(React, gameStore) {
 };
 ```
 
-## Display the dashboard
+### Display the dashboard
 
 Add a new `<div id="dashboard"/>` the `./index.html` file.
 
@@ -471,7 +471,7 @@ module.exports = function(containerId, dashboardId) {
 };
 ```
 
-## Remove the random button from `./ui/components/container.jsx`
+### Remove the random button from `./ui/components/container.jsx`
 
 ```Javascript
 'use strict';
@@ -547,7 +547,7 @@ And remove the styles from `./public/styles.css` file.
 }
 ```
 
-## Time and Moves 
+### Time and Moves 
 
 Lets watch how much time and how many moves user needs to complete. Remember what we did with our timer component?
 
@@ -676,15 +676,15 @@ module.exports = function(containerId, dashboardId) {
 };
 ```
 
-## Install the `moment` framework 
+### Install the `moment` framework 
 
 `npm install moment --save-dev`
 
-## Levels of difficulty
+### Levels of difficulty
 
 Lets add the ability to our game to compute different solutions for the game.
 
-## Create the levels
+### Create the levels
 
 Create a `./ui/stores/levels/index.js` file.
 
@@ -885,7 +885,7 @@ module.exports = function(containerId, dashboardId) {
 
 Go and play with reset and random buttons, then change the `currentLevel = levels[1]` re-build and see what happen.
 
-## Level switching
+### Level switching
 
 In our `./ui/stores/gameStore.js` we will provide functionality to access the list of available levels and which is the current one.
 
