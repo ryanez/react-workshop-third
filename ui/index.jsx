@@ -9,11 +9,15 @@ var React = require('react'),
     SquareFactory = require('./components/square.jsx'),
     Square = SquareFactory(React, gameStore),
     ContainerFactory = require('./components/container.jsx'),
-    Container = ContainerFactory(React, _, Square, gameStore);
+    Container = ContainerFactory(React, _, Square, gameStore),
+    DashboardFactory = require('./components/dashboard.jsx'),
+    Dashboard = DashboardFactory(React, gameStore);
 
 // designed to be called once document is loaded.
-module.exports = function(elementId) {
-    var element = global.document.getElementById(elementId);
+module.exports = function(containerId, dashboardId) {
+    var containerElement = global.document.getElementById(containerId);
+    var dashboardElement = global.document.getElementById(dashboardId);
 
-    ReactDOM.render(<Container />, element);
+    ReactDOM.render(<Container />, containerElement);
+    ReactDOM.render(<Dashboard />, dashboardElement);
 };
