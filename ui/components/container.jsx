@@ -34,10 +34,6 @@ module.exports = function(React, _, Square, gameStore) {
             }
         },
         
-        randomClickHandler: function() {
-            gameStore.random();
-        },
-    
         render: function() {
             var cols = this.state.cols,
                 rows = this.state.rows,
@@ -52,7 +48,6 @@ module.exports = function(React, _, Square, gameStore) {
             return (
                 <div className="container" style=
                     {style}>{squares}
-                    <button onClick={this.randomClickHandler}>Random</button>
                     <label>{this.state.completed ? 'Te la rifaste' : 'siguele dando'}</label>
                 </div>
                 );

@@ -26,13 +26,6 @@
     padding-top: 10px;
 }
 
-.container button {
-    position: absolute;
-    bottom: 0px;
-    left: 0;
-    height: 40px;
-}
-
 .container label {
     position: absolute;
     right: 0;
