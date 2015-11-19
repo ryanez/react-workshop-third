@@ -3,6 +3,7 @@
 var React = require('react'),
     ReactDOM = require('react-dom'),
     _ = require('underscore'),
+    moment = require('moment'),
     fluxtore = require('fluxtore'),
     gameStoreFactory = require('./stores/gameStore'),
     gameStore = gameStoreFactory(fluxtore, _),
@@ -11,7 +12,7 @@ var React = require('react'),
     ContainerFactory = require('./components/container.jsx'),
     Container = ContainerFactory(React, _, Square, gameStore),
     DashboardFactory = require('./components/dashboard.jsx'),
-    Dashboard = DashboardFactory(React, gameStore);
+    Dashboard = DashboardFactory(React, moment, gameStore);
 
 // designed to be called once document is loaded.
 module.exports = function(containerId, dashboardId) {
